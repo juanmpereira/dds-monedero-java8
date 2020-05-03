@@ -19,7 +19,7 @@ public class MonederoTest {
   @Test
   public void Poner() {
     cuenta.poner(1500);
-  }
+  }//podria hacer el assert equals para ver que se coloco donde debia ser
 
   @Test(expected = MontoNegativoException.class)
   public void PonerMontoNegativo() {
@@ -31,6 +31,7 @@ public class MonederoTest {
     cuenta.poner(1500);
     cuenta.poner(456);
     cuenta.poner(1900);
+    //podria hacer un assert para ver que se coloco bien el dinero
   }
 
   @Test(expected = MaximaCantidadDepositosException.class)

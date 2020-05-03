@@ -7,3 +7,5 @@ public class MaximaCantidadDepositosException extends RuntimeException {
   }
 
 }
+
+//se podria hacer una unica excepcion que sea supera el maximo y en el mensaje le agregas si es extraccion o deposito
