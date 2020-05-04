@@ -47,16 +47,16 @@ public class Movimiento {
   }
 
   public void agregateA(Cuenta cuenta) {
-    cuenta.setSaldo(calcularValor(cuenta)); 
+    //cuenta.setSaldo(calcularValor(cuenta)); 
     //deberia ser responsabilidad de la cuenta cambiar el saldo cuando se agrega movimiento
     cuenta.agregarMovimiento(fecha, monto, esDeposito);
   }
 
-  public double calcularValor(Cuenta cuenta) { //misplaced method; este es un metodo que deberia estar en cuenta y no aca
+ /* public double calcularValor(Cuenta cuenta) { //misplaced method; este es un metodo que deberia estar en cuenta y no aca
     if (esDeposito) {
       return cuenta.getSaldo() + getMonto();
     } else {
       return cuenta.getSaldo() - getMonto();
     }
-  }
+  }*/
 }
