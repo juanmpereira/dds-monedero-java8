@@ -81,7 +81,7 @@ public class Cuenta {
 
  public double getMontoExtraidoA(LocalDate fecha) {
     return getMovimientos().stream()
-        .filter(movimiento -> ! movimiento.fueDepositado(LocalDate.now())) 
+        .filter(movimiento -> ! movimiento.fueExtraido(LocalDate.now())) 
         //el filter podria pedir al movimiento que se fije si fue depositado ese dia. Esto es un feature envy. RESUELTO
         .mapToDouble(Movimiento::getMonto)
         .sum();
