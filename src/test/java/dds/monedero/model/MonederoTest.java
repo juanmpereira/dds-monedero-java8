@@ -1,6 +1,8 @@
 package dds.monedero.model;
 
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,6 +17,11 @@ public class MonederoTest {
   @Before
   public void init() {
     cuenta = new Cuenta();
+  }
+  
+  @Test
+  public void siNoIndicoElSaldoEs0() {
+	  assert( 0 ==  cuenta.getSaldo());
   }
 
   @Test

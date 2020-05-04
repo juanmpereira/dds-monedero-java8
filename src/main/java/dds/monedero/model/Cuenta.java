@@ -14,8 +14,7 @@ public class Cuenta {
   private double saldo = 0;
   private List<Movimiento> movimientos = new ArrayList<>(); 
 
-  public Cuenta() {
-    saldo = 0; //saldo ya esta inicializado en 0, no hace falta tenerlo aca
+  public Cuenta() { //saldo ya esta inicializado en 0, no hace falta tenerlo aca
   }
 
   public Cuenta(double montoInicial) {
