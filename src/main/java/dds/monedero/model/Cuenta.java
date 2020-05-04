@@ -35,20 +35,23 @@ public class Cuenta {
 
     new Movimiento(LocalDate.now(), cuanto, true).agregateA(this);
   }
-
+  //mucho codigo duplicado en poner y sacar
   public void sacar(double cuanto) {
 	 chequearMonto(cuanto);
 	 chequearSaldo(cuanto);
     double montoExtraidoHoy = getMontoExtraidoA(LocalDate.now()); //metodo muy largo, pdria tener un metodo que verifique no exceso limite
     double limite = 1000 - montoExtraidoHoy;
-    if (cuanto > limite) {
-      throw new MaximoExtraccionDiarioException("No puede extraer mas de $ " + 1000
-          + " diarios, límite: " + limite);
-    }
+    chequeoExcesoExtraccion (cuanto,limite);
     new Movimiento(LocalDate.now(), cuanto, false).agregateA(this);
+    }
+  
+  
+  public void chequeoExcesoExtraccion(double cuanto,double limite) {
+	  if (cuanto > limite) {
+	      throw new MaximoExtraccionDiarioException("No puede extraer mas de $ " + 1000
+	          + " diarios, límite: " + limite);
+	    }
   }
-
-  //mucho codigo duplicado en poner y sacar
   
   public void chequearMonto(double cuanto) {
 	    if (cuanto <= 0) {
@@ -61,6 +64,7 @@ public class Cuenta {
 	        throw new SaldoMenorException("No puede sacar mas de " + getSaldo() + " $");
 	      }
   }
+  //3 chequeos. mmm no puede haber una clase Chequeos que se encargue de eso?
   
   public void agregarMovimiento(LocalDate fecha, double cuanto, boolean esDeposito) {
     Movimiento movimiento = new Movimiento(fecha, cuanto, esDeposito);
@@ -78,8 +82,8 @@ public class Cuenta {
 
  public double getMontoExtraidoA(LocalDate fecha) {
     return getMovimientos().stream()
-        .filter(movimiento -> !movimiento.isDeposito() && movimiento.getFecha().equals(fecha)) //el filter podria pedir al movimiento
-        //que se fije si fue depositado ese dia. Esto es un feature envy
+        .filter(movimiento -> ! movimiento.fueDepositado(LocalDate.now())) 
+        //el filter podria pedir al movimiento que se fije si fue depositado ese dia. Esto es un feature envy. RESUELTO
         .mapToDouble(Movimiento::getMonto)
         .sum();
   }
