@@ -1,7 +1,6 @@
 package dds.monedero.model;
 
-
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,19 +18,25 @@ public class MonederoTest {
     cuenta = new Cuenta();
   }
   
+  
+ //TODO METODO DEBE TENER ASSERT!  
   @Test
   public void siNoIndicoElSaldoEs0() {
 	  assert( 0 ==  cuenta.getSaldo());
   }
 
-  @Test
+
+@Test
   public void Poner() {
     cuenta.poner(1500);
+    assert (1500==cuenta.getSaldo());
+//ver como comparar con double
   }//podria hacer el assert equals para ver que se coloco donde debia ser
 
   @Test(expected = MontoNegativoException.class)
   public void PonerMontoNegativo() {
     cuenta.poner(-1500);
+    assert (-1500 == cuenta.getSaldo());
   }
 
   @Test
@@ -39,6 +44,8 @@ public class MonederoTest {
     cuenta.poner(1500);
     cuenta.poner(456);
     cuenta.poner(1900);
+    double suma = 1500 + 456 + 1900;
+    assert (suma == cuenta.getSaldo());
     //podria hacer un assert para ver que se coloco bien el dinero
   }
 
@@ -48,23 +55,31 @@ public class MonederoTest {
     cuenta.poner(456);
     cuenta.poner(1900);
     cuenta.poner(245);
+    double suma = 1500 + 456 + 1900 + 245;
+    assert (suma == cuenta.getSaldo());
   }
 
   @Test(expected = SaldoMenorException.class)
   public void ExtraerMasQueElSaldo() {
     cuenta.setSaldo(90);
     cuenta.sacar(1001);
+    double resta = 90 -1001;
+    assert (resta == cuenta.getSaldo());
   }
 
   @Test(expected = MaximoExtraccionDiarioException.class)
   public void ExtraerMasDe1000() {
     cuenta.setSaldo(5000);
     cuenta.sacar(1001);
+    double resta = 5000 -1001;
+    assert (resta == cuenta.getSaldo());
+    
   }
 
   @Test(expected = MontoNegativoException.class)
   public void ExtraerMontoNegativo() {
     cuenta.sacar(-500);
+    assert (-500 == cuenta.getSaldo());
   }
 
 }
