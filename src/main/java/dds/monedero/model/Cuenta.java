@@ -27,10 +27,8 @@ public class Cuenta {
   }
 
   public void poner(double cuanto) {
-    if (cuanto <= 0) {
-      throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo");
-    }
-
+	  chequearMonto(cuanto);
+	  
     if (getMovimientos().stream().filter(movimiento -> movimiento.isDeposito()).count() >= 3) {
       throw new MaximaCantidadDepositosException("Ya excedio los " + 3 + " depositos diarios");
     }
@@ -39,12 +37,8 @@ public class Cuenta {
   }
 
   public void sacar(double cuanto) {
-    if (cuanto <= 0) {
-      throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo");
-    }
-    if (getSaldo() - cuanto < 0) {
-      throw new SaldoMenorException("No puede sacar mas de " + getSaldo() + " $");
-    }
+	 chequearMonto(cuanto);
+	 chequearSaldo(cuanto);
     double montoExtraidoHoy = getMontoExtraidoA(LocalDate.now()); //metodo muy largo, pdria tener un metodo que verifique no exceso limite
     double limite = 1000 - montoExtraidoHoy;
     if (cuanto > limite) {
@@ -55,6 +49,18 @@ public class Cuenta {
   }
 
   //mucho codigo duplicado en poner y sacar
+  
+  public void chequearMonto(double cuanto) {
+	    if (cuanto <= 0) {
+	        throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo");
+	      }
+  }
+  
+  public void chequearSaldo(double cuanto) {
+	    if (getSaldo() - cuanto < 0) {
+	        throw new SaldoMenorException("No puede sacar mas de " + getSaldo() + " $");
+	      }
+  }
   
   public void agregarMovimiento(LocalDate fecha, double cuanto, boolean esDeposito) {
     Movimiento movimiento = new Movimiento(fecha, cuanto, esDeposito);
