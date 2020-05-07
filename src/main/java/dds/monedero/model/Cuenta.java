@@ -81,11 +81,12 @@ public class Cuenta {
 
  public double getMontoExtraidoA(LocalDate fecha) {
     return getMovimientos().stream()
-        .filter(movimiento -> ! movimiento.fueExtraido(LocalDate.now())) 
+        .filter(movimiento -> ! movimiento.fueExtraido(fecha) )
+    //		.filter( movimiento::fueExtraido(fecha)) cuando solo hace una cosa el filter puedo usar los '::'
         //el filter podria pedir al movimiento que se fije si fue depositado ese dia. Esto es un feature envy. RESUELTO
         .mapToDouble(Movimiento::getMonto)
         .sum();
-  }
+  } //falta test para este con un sacar correcto, con click derecho puedo ver de donde lo llaman y que test tiene
 
   public List<Movimiento> getMovimientos() {
     return movimientos;
